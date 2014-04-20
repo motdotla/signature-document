@@ -12,4 +12,4 @@ npm install
 grunt
 ```
 
-Visit <http://localhost:3000/?url=http://localhost:3000/example/1.json>
+Visit <http://localhost:3000/?url=http://localhost:3000/examples/1.json>
