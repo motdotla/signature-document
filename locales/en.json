@@ -1,0 +1,11 @@
+{
+  "done_confirmation_msg": "Are you sure you are done signing?",
+  "done_msg": "Completed",
+  "done": "Done",
+  "yes": "Yes",
+  "no": "No",
+  "prompt_text": "Enter text:",
+  "processing_document": "Processing document",
+  "wait_patiently": "Wait patiently",
+  "download": "Download"
+}

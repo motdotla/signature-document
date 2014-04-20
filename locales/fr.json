@@ -1,0 +1,11 @@
+{
+  "done_confirmation_msg": "Etes-vous sûr que vous avez terminé la signature?",
+  "done_msg": "Terminé",
+  "done": "Terminé",
+  "yes": "Oui",
+  "no": "Pas",
+  "prompt_text": "Entrez le texte",
+  "processing_document": "Document en cours de traitement",
+  "wait_patiently": "Merci de patientez",
+  "download": "Télécharger"
+}
