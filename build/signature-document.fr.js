@@ -1,4 +1,4 @@
-/*! signature-document.js - 0.0.1 - 2014-04-22 - scottmotte */
+/*! signature-document.js - 0.0.1 - 2014-09-15 - scottmotte */
 var MicroEvent  = function(){};
 MicroEvent.prototype  = {
   bind  : function(event, fct){
@@ -1015,10 +1015,9 @@ var signature_pad = SignaturePad();
 (function(exports){
 
   var SignatureDocument = function() {
-    if(!(this instanceof SignatureDocument)){
-      return new SignatureDocument();
-    }
-
+    //if(!(this instanceof SignatureDocument)){
+    //  return new SignatureDocument();
+    //}
 
     this.last_click                 = {};
     this.pages                      = [];
@@ -1029,7 +1028,7 @@ var signature_pad = SignaturePad();
     this.uuid                       = this.Uuid();
     this.script                     = this.CurrentlyExecutedScript();
     this.parent                     = this.script.parentNode;
-    this.json                       = {document: {}};
+    this.json                       = {documents: []};
     this.signature_element_width    = 232.0;
     this.signature_element_height   = 104.0;
     this.endpoint                   = "https://www.signature.io";
@@ -1054,12 +1053,19 @@ var signature_pad = SignaturePad();
     return this;
   };
 
+
   SignatureDocument.prototype.init = function() {
     if (this.script) {
       this.script.className += " signature-document-script";
       this.script.id        = "signature-document-script-"+this.uuid;
 
+      this._drawCss();
       this.getDocument();
+      this._drawNav();
+      this._drawDoneNav();
+      this._drawDone();
+      this._drawDoneConfirmation();
+      this.events();
     } else {
       console.error("Could not find script tag to initialize on.");
     }
@@ -1068,19 +1074,25 @@ var signature_pad = SignaturePad();
   SignatureDocument.prototype.getDocument = function() {
     var self    = this;
 
-
-    self._drawCss();
     self._drawDocument();
     self._drawPages(1);
+    setTimeout(function(){
+      self.trigger("fart", "dude");
+    }, 50);
     //self._drawProcessing(); // need a better and simple processing message. or make it a bindable event
 
     var url = self.getParam("url");
     self.Get(url, function(resp) {
       self.json       = resp;
-      self.page_count = self.json.document.pages.length;
+      self.page_count = self.json.documents[0].pages.length;
 
       self._drawPages(self.page_count);
       self._drawPagesBackgrounds();
+      //self._drawPagesCanvases();
+      //self._drawCanvasesTextElements();
+      //self._drawCanvasesSignatureElements();
+      //self._maintainElementPositions();
+      //setTimeout(function(){ self._calcOffset(); }, 1000);
 
       return true;
     });
@@ -1101,13 +1113,11 @@ var signature_pad = SignaturePad();
 
   exports.SignatureDocument = SignatureDocument;
 
-  MicroEvent.mixin(SignatureDocument);
-
 }(this));
 
 
 
-(function(SignatureDocument){SignatureDocument.prototype._drawCss = function() {this.css = '@charset "utf-8";.signature-pad{display:none}.signature-nav-span:before{line-height:43px;font-size:30px}.signature-button{display:inline-block;*display:inline;zoom:1;line-height:normal;white-space:nowrap;vertical-align:baseline;text-align:center;cursor:pointer;-webkit-user-drag:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.signature-button::-moz-focus-inner{padding:0;border:0}.signature-button{font-size:100%;*font-size:90%;*overflow:visible;padding:0.5em 1.5em 0.5em;color:#444;color:rgba(0,0,0,0.80);*color:#444;border:1px solid #999;border:none rgba(0,0,0,0);background-color:#E6E6E6;text-decoration:none;border-radius:2px;-webkit-font-smoothing:antialiased;-webkit-transition:0.1s linear -webkit-box-shadow;-moz-transition:0.1s linear -moz-box-shadow;-ms-transition:0.1s linear box-shadow;-o-transition:0.1s linear box-shadow;transition:0.1s linear box-shadow}.signature-button-hover,.signature-button:hover{filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#00000000",endColorstr="#00000000",GradientType=0);background-image:-webkit-gradient(linear,0 0,0 100%,from(transparent),color-stop(40%,rgba(0,0,0,0.05)),to(rgba(0,0,0,0.05)));background-image:-webkit-linear-gradient(transparent,rgba(0,0,0,0.05) 40%,rgba(0,0,0,0.15));background-image:-moz-linear-gradient(top,rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.05));background-image:-ms-linear-gradient(transparent,rgba(0,0,0,0.05) 40%,rgba(0,0,0,0.15));background-image:-o-linear-gradient(transparent,rgba(0,0,0,0.05) 40%,rgba(0,0,0,0.05));background-image:linear-gradient(transparent,rgba(0,0,0,0.05) 40%,rgba(0,0,0,0.05))}.signature-button-active,.signature-button:active{box-shadow:0 0 0 1px rgba(0,0,0,0.15) inset,0 0 6px rgba(0,0,0,0.20) inset}.signature-button[disabled],.signature-button-disabled,.signature-button-disabled:hover,.signature-button-disabled:active{border:none;background-image:none;filter:progid:DXImageTransform.Microsoft.gradient(enabled = false);filter:alpha(opacity=40);-khtml-opacity:0.40;-moz-opacity:0.40;opacity:0.40;cursor:not-allowed;box-shadow:none}.signature-button-hidden{display:none}.signature-button::-moz-focus-inner{padding:0;border:0}.signature-button-primary,a.signature-button-primary{background:rgba(239,65,54,1);color:#fff}.signature-button:-moz-focusring{outline-color:rgba(0,0,0,0.85)}.signature-hidden{display:none}.signature-processing{z-index:3000;position:fixed;top:0;left:0;width:100%;height:100%;background:#FFF;padding-top:20px;font-size:18px}.signature-document{box-sizing:border-box;position:relative;margin:0;padding:55px 0 70px 0;border:0;font-size:100%;vertical-align:baseline;font-family:Helvetica;font-size:.8rem;text-align:center;background:rgba(0,0,0,0.1)}.signature-page{margin:0;padding:0;-webkit-tap-highlight-color:rgba(0,0,0,0);background:#fff;background:#fff url() center center no-repeat;background-size:contain;background-repeat:no-repeat;margin:0 auto;margin-bottom:10px;text-align:left}.signature-document-canvas{}.signature-header{position:fixed;top:0;left:0;width:100%;z-index:2000}.signature-nav{position:absolute;text-align:center;top:0;left:0;background:#E2E3E1;background:rgba(239,65,54,1);width:100%}.signature-no-list-style{padding:0;margin:0;list-style:none}.signature-nav li{display:inline-block}.signature-nav-btn{font-size:18px;color:rgba(255,255,255,1);display:inline-block;height:44px;width:60px;text-decoration:none;text-transform:uppercase;text-align:center;line-height:44px;border-right:1px dashed #fff;border-top:none;border-bottom:none;cursor:pointer}.signature-nav-btn.signature-nav-btn-first{border-left:1px dashed #fff}.signature-nav-disabled,.signature-nav-disabled:visited{color:rgba(255,255,255,0.5)}.signature-nav-active,.signature-nav-active:visited{color:#fff;background:#222}.signature-done-button{font-size:24px;border-radius:2px 2px 0 0}.signature-done-nav{position:fixed;text-align:center;bottom:0;right:0;width:100%;z-index:2000}.signature-nav a,.signature-nav a:visited{}.signature-done-confirmation{z-index:2010;background:rgba(255,255,255,0.9);width:100%;height:100%;position:fixed;top:0;left:0;text-align:center}.signature-done-confirmation-msg{font-size:300%;color:#000;margin-top:10px}.signature-done-confirmation-yes,.signature-done-confirmation-no{font-size:24px;margin:20px}.signature-done{position:fixed;background:rgba(255,255,255,0.9);top:0;left:0;width:100%;height:100%;text-align:center;z-index:2011}.signature-done-msg{font-size:300%;color:#000;margin-top:10px}.signature-download{font-size:24px;margin:20px}.signature-processing-document{width:144px;height:204px;background:white;border:20.16px solid black;text-align:left;position:relative;margin:0 auto;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;-o-box-sizing:content-box;-ms-box-sizing:content-box;box-sizing:content-box;margin-bottom:10px}.signature-processing-triangle{width:0;height:0;border-bottom:100px solid #1a1a1a;border-right:100px solid white;position:absolute}.signature-processing-corner{border-width:50.4px;right:-20.16px;top:-20.16px}.signature-processing-bar{border-bottom:20.16px solid black;margin-bottom:20.16px;overflow:hidden}.signature-processing-bar.signature-processing-short{margin-right:43.2px}.signature-processing-bars{width:115.2px;padding-top:20.16px;margin:0 auto}@-webkit-keyframes rotate{0%{-webkit-transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg)}}@-moz-keyframes rotate{0%{-moz-transform:rotate(0deg)}100%{-moz-transform:rotate(360deg)}}@-ms-keyframes rotate{0%{-ms-transform:rotate(0deg)}100%{-ms-transform:rotate(360deg)}}@-o-keyframes rotate{0%{-o-transform:rotate(0deg)}100%{-o-transform:rotate(360deg)}}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}@-webkit-keyframes bounceInRightAndBounceOutLeft{0%{opacity:0;-webkit-transform:translateX(2000px)}6%{opacity:1;-webkit-transform:translateX(-30px)}8%{-webkit-transform:translateX(10px)}10%{-webkit-transform:translateX(0)}90%{-webkit-transform:translateX(0)}92%{opacity:1;-webkit-transform:translateX(20px)}100%{opacity:0;-webkit-transform:translateX(-2000px)}}@-moz-keyframes bounceInRightAndBounceOutLeft{0%{opacity:0;-moz-transform:translateX(2000px)}6%{opacity:1;-moz-transform:translateX(-30px)}8%{-moz-transform:translateX(10px)}10%{-moz-transform:translateX(0)}90%{-moz-transform:translateX(0)}92%{opacity:1;-moz-transform:translateX(20px)}100%{opacity:0;-moz-transform:translateX(-2000px)}}@-ms-keyframes bounceInRightAndBounceOutLeft{0%{opacity:0;-ms-transform:translateX(2000px);transform:translateX(2000px)}6%{opacity:1;-ms-transform:translateX(-30px)}8%{-ms-transform:translateX(10px)}10%{-ms-transform:translateX(0)}90%{-ms-transform:translateX(0)}92%{opacity:1;-ms-transform:translateX(20px)}100%{opacity:0;-ms-transform:translateX(-2000px)}}@-o-keyframes bounceInRightAndBounceOutLeft{0%{opacity:0;-o-transform:translateX(2000px)}6%{opacity:1;-o-transform:translateX(-30px)}8%{-o-transform:translateX(10px)}10%{-o-transform:translateX(0)}90%{-o-transform:translateX(0)}92%{opacity:1;-o-transform:translateX(20px)}100%{opacity:0;-o-transform:translateX(-2000px)}}@keyframes bounceInRightAndBounceOutLeft{0%{opacity:0;transform:translateX(2000px)}6%{opacity:1;transform:translateX(-30px)}8%{transform:translateX(10px)}10%{transform:translateX(0)}90%{transform:translateX(0)}92%{opacity:1;transform:translateX(20px)}100%{opacity:0;transform:translateX(-2000px)}}.signature-processing-bounceInRightAndBounceOutLeft{-webkit-animation-name:bounceInRightAndBounceOutLeft;-moz-animation-name:bounceInRightAndBounceOutLeft;-o-animation-name:bounceInRightAndBounceOutLeft;animation-name:bounceInRightAndBounceOutLeft}.signature-processing-spinner{width:40.32px;height:40.32px;border-radius:40.32px;box-sizing:border-box;border:6px dotted white;position:absolute;top:81.84px;left:51.84px;border-top-color:#333;border-left-color:#3d3d3d;border-bottom-color:#474747;border-right-color:#525252;-webkit-animation:rotate 1000ms infinite linear;-moz-animation:rotate 1000ms infinite linear;-ms-animation:rotate 1000ms infinite linear;-o-animation:rotate 1000ms infinite linear;-ms-animation:rotate 1000ms infinite linear;animation:rotate 1000ms infinite linear}.signature-processing-animated{-webkit-animation-fill-mode:both;-moz-animation-fill-mode:both;-ms-animation-fill-mode:both;-o-animation-fill-mode:both;-animation-fill-mode:both;-webkit-animation-duration:1s;-moz-animation-duration:1s;-ms-animation-duration:1s;-o-animation-duration:1s;animation-duration:1s}.signature-processing-infinite-iteration{-webkit-animation-iteration-count:infinite;-moz-animation-iteration-count:infinite;-ms-animation-iteration-count:infinite;-o-animation-iteration-count:infinite;animation-iteration-count:infinite}.signature-processing-lengthy-duration{-webkit-animation-duration:5s;-moz-animation-duration:5s;-ms-animation-duration:5s;-o-animation-duration:5s;animation-duration:5s}.signature-processing-short-duration{-webkit-animation-duration:0.5s;-moz-animation-duration:0.5s;-ms-animation-duration:0.5s;-o-animation-duration:0.5s;animation-duration:0.5s}@-webkit-keyframes fadeInUp{0%{opacity:0;-webkit-transform:translateY(20px)}100%{opacity:1;-webkit-transform:translateY(0)}}@-moz-keyframes fadeInUp{0%{opacity:0;-moz-transform:translateY(20px)}100%{opacity:1;-moz-transform:translateY(0)}}@-o-keyframes fadeInUp{0%{opacity:0;-o-transform:translateY(20px)}100%{opacity:1;-o-transform:translateY(0)}}@keyframes fadeInUp{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}.signature-processing-fadeInUp{-webkit-animation-name:fadeInUp;-moz-animation-name:fadeInUp;-o-animation-name:fadeInUp;animation-name:fadeInUp}@import url(https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);';var style = document.createElement('style');style.type = 'text/css';if (style.styleSheet) {style.styleSheet.cssText = this.css;} else {style.appendChild(document.createTextNode(this.css));}var self = this;setTimeout(function() { self.trigger('_drawCss', self); }, 1);return document.body.appendChild(style);};}(SignatureDocument));
+(function(SignatureDocument){SignatureDocument.prototype._drawCss = function() {this.css = '@charset "utf-8";.signature-pad{display:none}.signature-nav-span:before{line-height:43px;font-size:30px}.signature-button{display:inline-block;*display:inline;zoom:1;line-height:normal;white-space:nowrap;vertical-align:baseline;text-align:center;cursor:pointer;-webkit-user-drag:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.signature-button::-moz-focus-inner{padding:0;border:0}.signature-button{font-size:100%;*font-size:90%;*overflow:visible;padding:0.5em 1.5em 0.5em;color:#444;color:rgba(0,0,0,0.80);*color:#444;border:1px solid #999;border:none rgba(0,0,0,0);background-color:#E6E6E6;text-decoration:none;border-radius:2px;-webkit-font-smoothing:antialiased;-webkit-transition:0.1s linear -webkit-box-shadow;-moz-transition:0.1s linear -moz-box-shadow;-ms-transition:0.1s linear box-shadow;-o-transition:0.1s linear box-shadow;transition:0.1s linear box-shadow}.signature-button-hover,.signature-button:hover{filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#00000000",endColorstr="#00000000",GradientType=0);background-image:-webkit-gradient(linear,0 0,0 100%,from(transparent),color-stop(40%,rgba(0,0,0,0.05)),to(rgba(0,0,0,0.05)));background-image:-webkit-linear-gradient(transparent,rgba(0,0,0,0.05) 40%,rgba(0,0,0,0.15));background-image:-moz-linear-gradient(top,rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.05));background-image:-ms-linear-gradient(transparent,rgba(0,0,0,0.05) 40%,rgba(0,0,0,0.15));background-image:-o-linear-gradient(transparent,rgba(0,0,0,0.05) 40%,rgba(0,0,0,0.05));background-image:linear-gradient(transparent,rgba(0,0,0,0.05) 40%,rgba(0,0,0,0.05))}.signature-button-active,.signature-button:active{box-shadow:0 0 0 1px rgba(0,0,0,0.15) inset,0 0 6px rgba(0,0,0,0.20) inset}.signature-button[disabled],.signature-button-disabled,.signature-button-disabled:hover,.signature-button-disabled:active{border:none;background-image:none;filter:progid:DXImageTransform.Microsoft.gradient(enabled = false);filter:alpha(opacity=40);-khtml-opacity:0.40;-moz-opacity:0.40;opacity:0.40;cursor:not-allowed;box-shadow:none}.signature-button-hidden{display:none}.signature-button::-moz-focus-inner{padding:0;border:0}.signature-button-primary,a.signature-button-primary{background:rgba(239,65,54,1);color:#fff}.signature-button:-moz-focusring{outline-color:rgba(0,0,0,0.85)}.signature-hidden{display:none}.signature-processing{z-index:3000;position:fixed;top:0;left:0;width:100%;height:100%;background:#FFF;padding-top:20px;font-size:18px}.signature-document{box-sizing:border-box;position:relative;margin:0;padding:55px 0 70px 0;border:0;font-size:100%;vertical-align:baseline;font-family:Helvetica;font-size:.8rem;text-align:center;background:rgba(0,0,0,0.1)}.signature-page{margin:0;padding:0;-webkit-tap-highlight-color:rgba(0,0,0,0);background:#fff;background:#fff url() center center no-repeat;background-size:contain;background-repeat:no-repeat;margin:0 auto;margin-bottom:10px;text-align:left}.signature-document-canvas{}.signature-header{position:fixed;top:0;left:0;width:100%;z-index:2000}.signature-nav{position:absolute;text-align:center;top:0;left:0;background:#E2E3E1;background:rgba(239,65,54,1);width:100%}.signature-no-list-style{padding:0;margin:0;list-style:none}.signature-nav li{display:inline-block}.signature-nav-btn{font-size:18px;color:rgba(255,255,255,1);display:inline-block;height:44px;width:60px;text-decoration:none;text-transform:uppercase;text-align:center;line-height:44px;border-right:1px dashed #fff;border-top:none;border-bottom:none;cursor:pointer}.signature-nav-btn.signature-nav-btn-first{border-left:1px dashed #fff}.signature-nav-disabled,.signature-nav-disabled:visited{color:rgba(255,255,255,0.5)}.signature-nav-active,.signature-nav-active:visited{color:#fff;background:#222}.signature-done-button{font-size:24px;border-radius:2px 2px 0 0}.signature-done-nav{position:fixed;text-align:center;bottom:0;right:0;width:100%;z-index:2000}.signature-nav a,.signature-nav a:visited{}.signature-done-confirmation{z-index:2010;background:rgba(255,255,255,0.9);width:100%;height:100%;position:fixed;top:0;left:0;text-align:center}.signature-done-confirmation-msg{font-size:300%;color:#000;margin-top:10px}.signature-done-confirmation-yes,.signature-done-confirmation-no{font-size:24px;margin:20px}.signature-done{position:fixed;background:rgba(255,255,255,0.9);top:0;left:0;width:100%;height:100%;text-align:center;z-index:2011}.signature-done-msg{font-size:300%;color:#000;margin-top:10px}.signature-download{font-size:24px;margin:20px}.signature-processing-document{width:144px;height:204px;background:white;border:20.16px solid black;text-align:left;position:relative;margin:0 auto;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;-o-box-sizing:content-box;-ms-box-sizing:content-box;box-sizing:content-box;margin-bottom:10px}.signature-processing-triangle{width:0;height:0;border-bottom:100px solid #1a1a1a;border-right:100px solid white;position:absolute}.signature-processing-corner{border-width:50.4px;right:-20.16px;top:-20.16px}.signature-processing-bar{border-bottom:20.16px solid black;margin-bottom:20.16px;overflow:hidden}.signature-processing-bar.signature-processing-short{margin-right:43.2px}.signature-processing-bars{width:115.2px;padding-top:20.16px;margin:0 auto}@-webkit-keyframes rotate{0%{-webkit-transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg)}}@-moz-keyframes rotate{0%{-moz-transform:rotate(0deg)}100%{-moz-transform:rotate(360deg)}}@-ms-keyframes rotate{0%{-ms-transform:rotate(0deg)}100%{-ms-transform:rotate(360deg)}}@-o-keyframes rotate{0%{-o-transform:rotate(0deg)}100%{-o-transform:rotate(360deg)}}@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}@-webkit-keyframes bounceInRightAndBounceOutLeft{0%{opacity:0;-webkit-transform:translateX(2000px)}6%{opacity:1;-webkit-transform:translateX(-30px)}8%{-webkit-transform:translateX(10px)}10%{-webkit-transform:translateX(0)}90%{-webkit-transform:translateX(0)}92%{opacity:1;-webkit-transform:translateX(20px)}100%{opacity:0;-webkit-transform:translateX(-2000px)}}@-moz-keyframes bounceInRightAndBounceOutLeft{0%{opacity:0;-moz-transform:translateX(2000px)}6%{opacity:1;-moz-transform:translateX(-30px)}8%{-moz-transform:translateX(10px)}10%{-moz-transform:translateX(0)}90%{-moz-transform:translateX(0)}92%{opacity:1;-moz-transform:translateX(20px)}100%{opacity:0;-moz-transform:translateX(-2000px)}}@-ms-keyframes bounceInRightAndBounceOutLeft{0%{opacity:0;-ms-transform:translateX(2000px);transform:translateX(2000px)}6%{opacity:1;-ms-transform:translateX(-30px)}8%{-ms-transform:translateX(10px)}10%{-ms-transform:translateX(0)}90%{-ms-transform:translateX(0)}92%{opacity:1;-ms-transform:translateX(20px)}100%{opacity:0;-ms-transform:translateX(-2000px)}}@-o-keyframes bounceInRightAndBounceOutLeft{0%{opacity:0;-o-transform:translateX(2000px)}6%{opacity:1;-o-transform:translateX(-30px)}8%{-o-transform:translateX(10px)}10%{-o-transform:translateX(0)}90%{-o-transform:translateX(0)}92%{opacity:1;-o-transform:translateX(20px)}100%{opacity:0;-o-transform:translateX(-2000px)}}@keyframes bounceInRightAndBounceOutLeft{0%{opacity:0;transform:translateX(2000px)}6%{opacity:1;transform:translateX(-30px)}8%{transform:translateX(10px)}10%{transform:translateX(0)}90%{transform:translateX(0)}92%{opacity:1;transform:translateX(20px)}100%{opacity:0;transform:translateX(-2000px)}}.signature-processing-bounceInRightAndBounceOutLeft{-webkit-animation-name:bounceInRightAndBounceOutLeft;-moz-animation-name:bounceInRightAndBounceOutLeft;-o-animation-name:bounceInRightAndBounceOutLeft;animation-name:bounceInRightAndBounceOutLeft}.signature-processing-spinner{width:40.32px;height:40.32px;border-radius:40.32px;box-sizing:border-box;border:6px dotted white;position:absolute;top:81.84px;left:51.84px;border-top-color:#333;border-left-color:#3d3d3d;border-bottom-color:#474747;border-right-color:#525252;-webkit-animation:rotate 1000ms infinite linear;-moz-animation:rotate 1000ms infinite linear;-ms-animation:rotate 1000ms infinite linear;-o-animation:rotate 1000ms infinite linear;-ms-animation:rotate 1000ms infinite linear;animation:rotate 1000ms infinite linear}.signature-processing-animated{-webkit-animation-fill-mode:both;-moz-animation-fill-mode:both;-ms-animation-fill-mode:both;-o-animation-fill-mode:both;-animation-fill-mode:both;-webkit-animation-duration:1s;-moz-animation-duration:1s;-ms-animation-duration:1s;-o-animation-duration:1s;animation-duration:1s}.signature-processing-infinite-iteration{-webkit-animation-iteration-count:infinite;-moz-animation-iteration-count:infinite;-ms-animation-iteration-count:infinite;-o-animation-iteration-count:infinite;animation-iteration-count:infinite}.signature-processing-lengthy-duration{-webkit-animation-duration:5s;-moz-animation-duration:5s;-ms-animation-duration:5s;-o-animation-duration:5s;animation-duration:5s}.signature-processing-short-duration{-webkit-animation-duration:0.5s;-moz-animation-duration:0.5s;-ms-animation-duration:0.5s;-o-animation-duration:0.5s;animation-duration:0.5s}@-webkit-keyframes fadeInUp{0%{opacity:0;-webkit-transform:translateY(20px)}100%{opacity:1;-webkit-transform:translateY(0)}}@-moz-keyframes fadeInUp{0%{opacity:0;-moz-transform:translateY(20px)}100%{opacity:1;-moz-transform:translateY(0)}}@-o-keyframes fadeInUp{0%{opacity:0;-o-transform:translateY(20px)}100%{opacity:1;-o-transform:translateY(0)}}@keyframes fadeInUp{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}.signature-processing-fadeInUp{-webkit-animation-name:fadeInUp;-moz-animation-name:fadeInUp;-o-animation-name:fadeInUp;animation-name:fadeInUp}';var style = document.createElement('style');style.type = 'text/css';if (style.styleSheet) {style.styleSheet.cssText = this.css;} else {style.appendChild(document.createTextNode(this.css));}return document.body.appendChild(style);};}(SignatureDocument));
 
 (function(SignatureDocument){
   SignatureDocument.prototype.preDraw = function() {
@@ -1160,7 +1170,7 @@ var signature_pad = SignaturePad();
 
   SignatureDocument.prototype._drawPagesBackgrounds = function() {
     for (var i = 0; i < this.pages.length; i++) {
-      var page = this.json.document.pages[i];
+      var page = this.json.documents[0].pages[i];
       this.pages[i].style.backgroundImage = "url("+page.url+")";
     }
 
@@ -1208,7 +1218,7 @@ var signature_pad = SignaturePad();
 
     var fab                         = new fabric.Canvas("signature-document-canvas-"+page_number);
     fab.selection = false; // disable global canvas selection
-    fab.signature_page_id           = this.json.document.pages[page_number-1];
+    fab.signature_page_id           = this.json.documents[0].pages[page_number-1];
     this.fabricEvents(fab);
 
     fab.setWidth(this.style_width);
@@ -1225,7 +1235,7 @@ var signature_pad = SignaturePad();
   };
 
   SignatureDocument.prototype._drawCanvasSignatureElements = function(page_number) {
-    var page_json = this.json.document.pages[page_number-1];
+    var page_json = this.json.documents[0].pages[page_number-1];
     if (page_json) {
       for (var i = 0; i < page_json.signature_elements.length; i++) {
         this._drawSignatureElement(this.fabrics[page_number-1], page_json.signature_elements[i]);
@@ -1282,7 +1292,7 @@ var signature_pad = SignaturePad();
   };
 
   SignatureDocument.prototype._drawCanvasTextElements = function(page_number) {
-    var page_json = this.json.document.pages[page_number-1];
+    var page_json = this.json.documents[0].pages[page_number-1];
     if (page_json) {
       for (var i = 0; i < page_json.text_elements.length; i++) {
         this._drawTextElement(this.fabrics[page_number-1], page_json.text_elements[i]);
@@ -1342,7 +1352,7 @@ var signature_pad = SignaturePad();
     this.text_mode_btn.className = "signature-nav-btn signature-nav-btn-first";
     this.signature_nav_btns.push(this.text_mode_btn);
     var span1  = document.createElement("span");
-    span1.className = "signature-nav-span icon-font";
+    span1.className = "signature-nav-span fa fa-font";
     this.text_mode_btn.appendChild(span1);
     li1.appendChild(this.text_mode_btn);
     nav_ul.appendChild(li1);
@@ -1353,7 +1363,7 @@ var signature_pad = SignaturePad();
     this.sign_mode_btn.className = "signature-nav-btn";
     this.signature_nav_btns.push(this.sign_mode_btn);
     var span2  = document.createElement("span");
-    span2.className = "signature-nav-span icon-pencil";
+    span2.className = "signature-nav-span fa fa-pencil";
     this.sign_mode_btn.appendChild(span2);
     li2.appendChild(this.sign_mode_btn);
     nav_ul.appendChild(li2);
@@ -1364,7 +1374,7 @@ var signature_pad = SignaturePad();
     this.trash_mode_btn.className = "signature-nav-btn signature-nav-disabled";
     this.signature_nav_btns.push(this.trash_mode_btn);
     var span3  = document.createElement("span");
-    span3.className = "signature-nav-span icon-trash";
+    span3.className = "signature-nav-span fa fa-trash";
     this.trash_mode_btn.appendChild(span3);
     li3.appendChild(this.trash_mode_btn);
     nav_ul.appendChild(li3);
@@ -1855,4 +1865,6 @@ var signature_pad = SignaturePad();
 }(SignatureDocument));
 
 
-var signature_document = SignatureDocument();
+MicroEvent.mixin(SignatureDocument);
+
+var signature_document = new SignatureDocument();

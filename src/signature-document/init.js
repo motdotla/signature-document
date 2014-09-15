@@ -1,1 +1,3 @@
-var signature_document = SignatureDocument();
+MicroEvent.mixin(SignatureDocument);
+
+var signature_document = new SignatureDocument();

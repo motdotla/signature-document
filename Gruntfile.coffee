@@ -16,8 +16,6 @@ module.exports = (grunt) ->
         "} else {" +
           "style.appendChild(document.createTextNode(this.css));" +
         "}" +
-        "var self = this;" +
-        "setTimeout(function() { self.trigger('_drawCss', self); }, 1);" +
         "return document.body.appendChild(style);" +
       "};" +
     "}(SignatureDocument));"

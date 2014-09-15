@@ -49,7 +49,7 @@
 
   SignatureDocument.prototype._drawPagesBackgrounds = function() {
     for (var i = 0; i < this.pages.length; i++) {
-      var page = this.json.document.pages[i];
+      var page = this.json.documents[0].pages[i];
       this.pages[i].style.backgroundImage = "url("+page.url+")";
     }
 
@@ -97,7 +97,7 @@
 
     var fab                         = new fabric.Canvas("signature-document-canvas-"+page_number);
     fab.selection = false; // disable global canvas selection
-    fab.signature_page_id           = this.json.document.pages[page_number-1];
+    fab.signature_page_id           = this.json.documents[0].pages[page_number-1];
     this.fabricEvents(fab);
 
     fab.setWidth(this.style_width);
@@ -114,7 +114,7 @@
   };
 
   SignatureDocument.prototype._drawCanvasSignatureElements = function(page_number) {
-    var page_json = this.json.document.pages[page_number-1];
+    var page_json = this.json.documents[0].pages[page_number-1];
     if (page_json) {
       for (var i = 0; i < page_json.signature_elements.length; i++) {
         this._drawSignatureElement(this.fabrics[page_number-1], page_json.signature_elements[i]);
@@ -171,7 +171,7 @@
   };
 
   SignatureDocument.prototype._drawCanvasTextElements = function(page_number) {
-    var page_json = this.json.document.pages[page_number-1];
+    var page_json = this.json.documents[0].pages[page_number-1];
     if (page_json) {
       for (var i = 0; i < page_json.text_elements.length; i++) {
         this._drawTextElement(this.fabrics[page_number-1], page_json.text_elements[i]);
@@ -231,7 +231,7 @@
     this.text_mode_btn.className = "signature-nav-btn signature-nav-btn-first";
     this.signature_nav_btns.push(this.text_mode_btn);
     var span1  = document.createElement("span");
-    span1.className = "signature-nav-span icon-font";
+    span1.className = "signature-nav-span fa fa-font";
     this.text_mode_btn.appendChild(span1);
     li1.appendChild(this.text_mode_btn);
     nav_ul.appendChild(li1);
@@ -242,7 +242,7 @@
     this.sign_mode_btn.className = "signature-nav-btn";
     this.signature_nav_btns.push(this.sign_mode_btn);
     var span2  = document.createElement("span");
-    span2.className = "signature-nav-span icon-pencil";
+    span2.className = "signature-nav-span fa fa-pencil";
     this.sign_mode_btn.appendChild(span2);
     li2.appendChild(this.sign_mode_btn);
     nav_ul.appendChild(li2);
@@ -253,7 +253,7 @@
     this.trash_mode_btn.className = "signature-nav-btn signature-nav-disabled";
     this.signature_nav_btns.push(this.trash_mode_btn);
     var span3  = document.createElement("span");
-    span3.className = "signature-nav-span icon-trash";
+    span3.className = "signature-nav-span fa fa-trash";
     this.trash_mode_btn.appendChild(span3);
     li3.appendChild(this.trash_mode_btn);
     nav_ul.appendChild(li3);
