@@ -9,8 +9,11 @@
 <body>
   <script src='/build/signature-document.js' data-signature-document-url="http://localhost:3000/examples/1.json"></script>
   <script>
-    signature_document.bind('fart', function(value) {
-      console.log('fart', value);
+    signature_document.bind('init', function(value) {
+      console.log('init', value);
+    });
+    signature_document.bind('rendered', function(value) {
+      console.log('rendered', value);
     });
   </script>
 </body>

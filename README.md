@@ -15,6 +15,26 @@ Place the script tag in the body of an html page. Set data-signature-document-ur
 <script src='/path/to/signature-document.js' data-signature-document-url="http://example.com/path/to/signature/document.json"></script>
 ```
 
+### Events
+
+You can bind to the following events.
+
+#### signature-document:init
+
+```
+signature_document.bind('init', function(value) {
+  console.log('init', value);
+});
+```
+
+#### signature-document:rendered
+
+```
+signature_document.bind('rendered', function(value) {
+  console.log('rendered', value);
+});
+```
+
 ### Example
 
 Copy & paste the following to a blank html page.
@@ -27,6 +47,11 @@ Copy & paste the following to a blank html page.
 </head>
 <body>
   <script src='https://rawgit.com/motdotla/signature-document/master/build/signature-document.min.js' data-signature-document-url="http://signature-api.herokuapp.com/api/v0/documents/8abddacd-2bb0-498c-b4f6-e3259d7edb35.json"></script>
+  <script>
+    signature_document.bind('rendered', function(value) {
+      console.log('done rendering');
+    });
+  </script>
 </body>
 </html>
 ```

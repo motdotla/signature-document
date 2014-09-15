@@ -22,6 +22,8 @@
   };
 
   SignatureDocument.prototype.init = function() {
+    this.FireEvent("init", {});
+
     if (this.script) {
       this.script.className += " signature-document-script";
       this.script.id        = "signature-document-script-"+this.uuid;
@@ -38,7 +40,6 @@
     self._drawCss();
     self._drawDocument();
     self._drawPages(1);
-    self.FireEvent("fart", "again");
 
     self.Get(self.signature_document_url, function(resp) {
       self.json       = resp;
@@ -47,6 +48,7 @@
       self._drawPages(self.page_count);
       self._drawPagesBackgrounds();
 
+      self.FireEvent("rendered", {});
       return true;
     });
   };
