@@ -6,11 +6,12 @@ JavaScript rendering engine for a [signature-document](https://github.com/motdot
 <script src='/path/to/signature-document.js' data-signature-document-url="http://example.com/path/to/signature/document.json"></script>
 ```
 
-<img src="https://raw.githubusercontent.com/motdotla/signature-document/master/signature-document.png" alt="signature-document" />
 
 ## Usage
 
-Here's a working example. Paste this somewhere on a blank html page.
+### Copy/Paste Example
+
+Copy & paste the following to a blank html page.
 
 ```html
 <html>
@@ -19,10 +20,14 @@ Here's a working example. Paste this somewhere on a blank html page.
   <style type="text/css">* {padding: 0; margin: 0;}</style>
 </head>
 <body>
-  <script src='https://raw.githubusercontent.com/motdotla/signature-document/master/build/signature-document.min.js' data-signature-document-url="http://signature-api.herokuapp.com/api/v0/documents/0a564265-6429-4852-9014-1e9249934f5c.json"></script>
+  <script src='https://raw.githubusercontent.com/motdotla/signature-document/master/build/signature-document.min.js' data-signature-document-url="http://signature-api.herokuapp.com/api/v0/documents/8abddacd-2bb0-498c-b4f6-e3259d7edb35.json"></script>
 </body>
 </html>
 ```
+
+It will render out to look like the following image.
+
+<img src="https://raw.githubusercontent.com/motdotla/signature-document/master/signature-document.png" alt="signature-document" />
 
 ## Signature Document Blueprint
 
