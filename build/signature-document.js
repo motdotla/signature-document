@@ -72,13 +72,13 @@ if( typeof module !== "undefined" && ('exports' in module)){
       this.script.className += " signature-document-script";
       this.script.id        = "signature-document-script-"+this.uuid;
 
-      this.getDocument();
+      this._getDocument();
     } else {
       console.error("Could not find script tag to initialize on.");
     }
   };
 
-  SignatureDocument.prototype.getDocument = function() {
+  SignatureDocument.prototype._getDocument = function() {
     var self    = this;
 
     self._drawCss();
@@ -110,15 +110,6 @@ if( typeof module !== "undefined" && ('exports' in module)){
     return this.height * this.multiplier;
   };
 
-  exports.SignatureDocument = SignatureDocument;
-
-}(this));
-
-
-
-(function(SignatureDocument){SignatureDocument.prototype._drawCss = function() {this.css = '@charset "utf-8";.signature-document{box-sizing:border-box;position:relative;margin:0;padding:55px 0 70px 0;border:0;font-size:100%;vertical-align:baseline;font-family:Helvetica;font-size:.8rem;text-align:center;background:rgba(0,0,0,0.1)}.signature-page{margin:0;padding:0;-webkit-tap-highlight-color:rgba(0,0,0,0);background:#fff;background:#fff url() center center no-repeat;background-size:contain;background-repeat:no-repeat;margin:0 auto;margin-bottom:10px;text-align:left}';var style = document.createElement('style');style.type = 'text/css';if (style.styleSheet) {style.styleSheet.cssText = this.css;} else {style.appendChild(document.createTextNode(this.css));}return document.body.appendChild(style);};}(SignatureDocument));
-
-(function(SignatureDocument){
   SignatureDocument.prototype._calcOffset = function() {
     for (var i=0; i < this.fabrics.length; i++) {
       this.fabrics[i].calcOffset();
@@ -165,10 +156,6 @@ if( typeof module !== "undefined" && ('exports' in module)){
     return this.document.appendChild(page);
   };
 
-}(SignatureDocument));
-
-
-(function(SignatureDocument){  
   SignatureDocument.prototype.Uuid = function() {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
       var r, v;
@@ -218,8 +205,12 @@ if( typeof module !== "undefined" && ('exports' in module)){
     );
   };
 
-}(SignatureDocument));
+  exports.SignatureDocument = SignatureDocument;
 
+}(this));
+
+
+(function(SignatureDocument){SignatureDocument.prototype._drawCss = function() {this.css = '@charset "utf-8";.signature-document{box-sizing:border-box;position:relative;margin:0;padding:55px 0 70px 0;border:0;font-size:100%;vertical-align:baseline;font-family:Helvetica;font-size:.8rem;text-align:center;background:rgba(0,0,0,0.1)}.signature-page{margin:0;padding:0;-webkit-tap-highlight-color:rgba(0,0,0,0);background:#fff;background:#fff url() center center no-repeat;background-size:contain;background-repeat:no-repeat;margin:0 auto;margin-bottom:10px;text-align:left}';var style = document.createElement('style');style.type = 'text/css';if (style.styleSheet) {style.styleSheet.cssText = this.css;} else {style.appendChild(document.createTextNode(this.css));}return document.body.appendChild(style);};}(SignatureDocument));
 
 MicroEvent.mixin(SignatureDocument);
 
