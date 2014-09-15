@@ -1053,19 +1053,12 @@ var signature_pad = SignaturePad();
     return this;
   };
 
-
   SignatureDocument.prototype.init = function() {
     if (this.script) {
       this.script.className += " signature-document-script";
       this.script.id        = "signature-document-script-"+this.uuid;
 
-      this._drawCss();
       this.getDocument();
-      this._drawNav();
-      this._drawDoneNav();
-      this._drawDone();
-      this._drawDoneConfirmation();
-      this.events();
     } else {
       console.error("Could not find script tag to initialize on.");
     }
@@ -1074,12 +1067,12 @@ var signature_pad = SignaturePad();
   SignatureDocument.prototype.getDocument = function() {
     var self    = this;
 
+    self._drawCss();
     self._drawDocument();
     self._drawPages(1);
     setTimeout(function(){
       self.trigger("fart", "dude");
     }, 50);
-    //self._drawProcessing(); // need a better and simple processing message. or make it a bindable event
 
     var url = self.getParam("url");
     self.Get(url, function(resp) {
@@ -1088,11 +1081,6 @@ var signature_pad = SignaturePad();
 
       self._drawPages(self.page_count);
       self._drawPagesBackgrounds();
-      //self._drawPagesCanvases();
-      //self._drawCanvasesTextElements();
-      //self._drawCanvasesSignatureElements();
-      //self._maintainElementPositions();
-      //setTimeout(function(){ self._calcOffset(); }, 1000);
 
       return true;
     });
