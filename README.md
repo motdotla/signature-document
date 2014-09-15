@@ -9,7 +9,13 @@ JavaScript rendering engine for a [signature-document](https://github.com/motdot
 
 ## Usage
 
-### Copy/Paste Example
+Place the script tag in the body of an html page. Set data-signature-document-url to the url of a [signature-document file](https://github.com/motdotla/signature-document#signature-document-blueprint).
+
+```html
+<script src='/path/to/signature-document.js' data-signature-document-url="http://example.com/path/to/signature/document.json"></script>
+```
+
+### Example
 
 Copy & paste the following to a blank html page.
 
