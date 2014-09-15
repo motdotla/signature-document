@@ -19,7 +19,7 @@ Place the script tag in the body of an html page. Set data-signature-document-ur
 
 You can bind to the following events.
 
-#### signature-document:init
+#### init
 
 ```
 signature_document.bind('init', function(value) {
@@ -27,7 +27,7 @@ signature_document.bind('init', function(value) {
 });
 ```
 
-#### signature-document:rendered
+#### rendered
 
 ```
 signature_document.bind('rendered', function(value) {
