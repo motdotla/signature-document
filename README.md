@@ -1,12 +1,12 @@
 # signature-document
 
-<img src="https://raw.githubusercontent.com/motdotla/signature-document/master/signature-document.png" alt="signature-document" width="500" />
-
 JavaScript rendering engine for a [signature-document](https://github.com/motdotla/signature-document#signature-document-blueprint).
 
 ```html
 <script src='/path/to/signature-document.js' data-signature-document-url="http://example.com/path/to/signature/document.json"></script>
 ```
+
+<img src="https://raw.githubusercontent.com/motdotla/signature-document/master/signature-document.png" alt="signature-document" />
 
 ## Usage
 
