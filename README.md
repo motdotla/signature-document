@@ -26,7 +26,7 @@ Copy & paste the following to a blank html page.
   <style type="text/css">* {padding: 0; margin: 0;}</style>
 </head>
 <body>
-  <script src='https://raw.githubusercontent.com/motdotla/signature-document/master/build/signature-document.min.js' data-signature-document-url="http://signature-api.herokuapp.com/api/v0/documents/8abddacd-2bb0-498c-b4f6-e3259d7edb35.json"></script>
+  <script src='https://rawgit.com/motdotla/signature-document/master/build/signature-document.min.js' data-signature-document-url="http://signature-api.herokuapp.com/api/v0/documents/8abddacd-2bb0-498c-b4f6-e3259d7edb35.json"></script>
 </body>
 </html>
 ```
