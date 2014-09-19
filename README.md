@@ -45,7 +45,9 @@ This will expose a spattering of values.
 ```javascript
 {
   elements: {
-    pages: []
+    pages: [],
+    style_width: 1000,
+    style_height: 1294
   }
 }
 ```

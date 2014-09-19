@@ -90,7 +90,7 @@ if( typeof module !== "undefined" && ('exports' in module)){
       self._drawPages(self.page_count);
       self._drawPagesBackgrounds();
 
-      self.FireEvent("rendered", {pages: self.pages});
+      self.FireEvent("rendered", {elements: {pages: self.pages}, style_width: self.style_width, style_height: self.style_height});
       return true;
     });
   };
