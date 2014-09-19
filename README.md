@@ -1,5 +1,7 @@
 # signature-document
 
+<img src="https://raw.githubusercontent.com/motdotla/signature-document/master/signature-document.gif" alt="signature-document" align="right" width="220" />
+
 JavaScript rendering engine for a [signature-document](https://github.com/motdotla/signature-document#signature-document-blueprint).
 
 ```html
