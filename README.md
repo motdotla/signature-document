@@ -4,6 +4,8 @@
 
 JavaScript rendering engine for a [signature-document](https://github.com/motdotla/signature-document#signature-document-blueprint).
 
+It renders out the contents of the signature-document JSON to a formatted and readable document-like format but friendly to the web. It very basically displays the pages as background images, appropriately sized, and fitting to your viewable screen.
+
 ```html
 <script src='/path/to/signature-document.js' data-signature-document-url="http://example.com/path/to/signature/document.json"></script>
 <script>
