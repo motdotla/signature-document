@@ -16,14 +16,10 @@
     this.multiplier                 = this.calculateMultiplier();
     this.style_height               = this.calculateStyleHeight(); 
 
-    this.init();
-
     return this;
   };
 
   SignatureDocument.prototype.init = function() {
-    this.FireEvent("init", {});
-
     if (this.script) {
       this.script.className += " signature-document-script";
       this.script.id        = "signature-document-script-"+this.uuid;
@@ -48,7 +44,7 @@
       self._drawPages(self.page_count);
       self._drawPagesBackgrounds();
 
-      self.FireEvent("rendered", {});
+      self.FireEvent("rendered", {elements: {pages: self.pages}});
       return true;
     });
   };
@@ -164,3 +160,6 @@
   exports.SignatureDocument = SignatureDocument;
 
 }(this));
+
+MicroEvent.mixin(SignatureDocument);
+var signature_document = new SignatureDocument();

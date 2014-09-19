@@ -1,4 +1,4 @@
-/*! signature-document.js - 0.0.1 - 2014-09-15 - scottmotte */
+/*! signature-document.js - 0.0.1 - 2014-09-19 - scottmotte */
 var MicroEvent  = function(){};
 MicroEvent.prototype  = {
   bind  : function(event, fct){
@@ -62,14 +62,10 @@ if( typeof module !== "undefined" && ('exports' in module)){
     this.multiplier                 = this.calculateMultiplier();
     this.style_height               = this.calculateStyleHeight(); 
 
-    this.init();
-
     return this;
   };
 
   SignatureDocument.prototype.init = function() {
-    this.FireEvent("init", {});
-
     if (this.script) {
       this.script.className += " signature-document-script";
       this.script.id        = "signature-document-script-"+this.uuid;
@@ -94,7 +90,7 @@ if( typeof module !== "undefined" && ('exports' in module)){
       self._drawPages(self.page_count);
       self._drawPagesBackgrounds();
 
-      self.FireEvent("rendered", {});
+      self.FireEvent("rendered", {pages: self.pages});
       return true;
     });
   };
@@ -211,9 +207,8 @@ if( typeof module !== "undefined" && ('exports' in module)){
 
 }(this));
 
+MicroEvent.mixin(SignatureDocument);
+var signature_document = new SignatureDocument();
+
 
 (function(SignatureDocument){SignatureDocument.prototype._drawCss = function() {this.css = '@charset "utf-8";.signature-document{box-sizing:border-box;position:relative;margin:0;padding:55px 0 70px 0;border:0;font-size:100%;vertical-align:baseline;font-family:Helvetica;font-size:.8rem;text-align:center;background:rgba(0,0,0,0.1)}.signature-page{margin:0;padding:0;-webkit-tap-highlight-color:rgba(0,0,0,0);background:#fff;background:#fff url() center center no-repeat;background-size:contain;background-repeat:no-repeat;margin:0 auto;margin-bottom:10px;text-align:left}';var style = document.createElement('style');style.type = 'text/css';if (style.styleSheet) {style.styleSheet.cssText = this.css;} else {style.appendChild(document.createTextNode(this.css));}return document.body.appendChild(style);};}(SignatureDocument));
-
-MicroEvent.mixin(SignatureDocument);
-
-var signature_document = new SignatureDocument();

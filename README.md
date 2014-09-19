@@ -4,35 +4,46 @@ JavaScript rendering engine for a [signature-document](https://github.com/motdot
 
 ```html
 <script src='/path/to/signature-document.js' data-signature-document-url="http://example.com/path/to/signature/document.json"></script>
+<script>
+  signature_document.init();
+</script>
 ```
 
 
 ## Usage
 
-Place the script tag in the body of an html page. Set data-signature-document-url to the url of a [signature-document file](https://github.com/motdotla/signature-document#signature-document-blueprint).
+Place the script tag in the body of an html page. Set data-signature-document-url to the url of a [signature-document file](https://github.com/motdotla/signature-document#signature-document-blueprint). Then initialize the script.
 
 ```html
 <script src='/path/to/signature-document.js' data-signature-document-url="http://example.com/path/to/signature/document.json"></script>
+<script>
+  signature_document.init();
+</script>
 ```
 
 ### Events
 
 You can bind to the following events.
 
-#### init
-
-```
-signature_document.bind('init', function(value) {
-  console.log('init', value);
-});
-```
-
 #### rendered
 
-```
-signature_document.bind('rendered', function(value) {
-  console.log('rendered', value);
+```javascript
+signature_document.init();
+signature_document.bind('rendered', function(values) {
+  console.log('rendered', values);
 });
+```
+
+This will expose a spattering of values.
+
+* elements.pages - List of pages' dom rendered for the document.
+
+```javascript
+{
+  elements: {
+    pages: []
+  }
+}
 ```
 
 ### Example

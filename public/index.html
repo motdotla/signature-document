@@ -9,6 +9,7 @@
 <body>
   <script src='/build/signature-document.js' data-signature-document-url="http://localhost:3000/examples/1.json"></script>
   <script>
+    signature_document.init();
     signature_document.bind('init', function(value) {
       console.log('init', value);
     });
