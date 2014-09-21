@@ -2,6 +2,8 @@
 
   var SignatureDocument = function() {
     this.pages                      = [];
+    this.canvases                   = [];
+    this.fabrics                    = [];
     this.uuid                       = this.Uuid();
     this.script                     = this.CurrentlyExecutedScript();
     this.parent                     = this.script.parentNode;
@@ -10,7 +12,6 @@
     this.height                     = 1294.0;
     this.max_width                  = 1000.0;
     this.signature_document_url     = this.script.getAttribute("data-signature-document-url");
-
     // calculate
     this.style_width                = this.calculateStyleWidth();
     this.multiplier                 = this.calculateMultiplier();
@@ -43,6 +44,7 @@
 
       self._drawPages(self.page_count);
       self._drawPagesBackgrounds();
+      self._drawPagesCanvases();
 
       self.FireEvent("rendered", {elements: {pages: self.pages}, style_width: self.style_width, style_height: self.style_height});
       return true;
@@ -106,6 +108,34 @@
     this.pages.push(page);
 
     return this.document.appendChild(page);
+  };
+
+  SignatureDocument.prototype._drawPagesCanvases = function() {
+    for (var i = 0; i < this.pages.length; i++) {
+      this._drawPageCanvas(i+1);
+    }
+  };
+
+  SignatureDocument.prototype._drawPageCanvas = function(page_number) {
+    var canvas        = document.createElement('canvas');
+    canvas.className  = "signature-document-canvas";
+    canvas.id         = "signature-document-canvas-"+page_number;
+    canvas.width      = 1000;
+    canvas.height     = 1294;
+
+    this.pages[page_number-1].appendChild(canvas);
+    this.canvases.push(canvas);
+
+    var fab                         = new fabric.Canvas("signature-document-canvas-"+page_number);
+    fab.selection = false; // disable global canvas selection
+    //fab.signature_page_id           = this.json.documents[0].pages[page_number-1];
+    //this.fabricEvents(fab);
+
+    fab.setWidth(this.style_width);
+    fab.setHeight(this.style_height);
+    fab.calcOffset();
+
+    return this.fabrics.push(fab);
   };
 
   SignatureDocument.prototype.Uuid = function() {

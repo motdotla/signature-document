@@ -37,7 +37,7 @@ module.exports = (grunt) ->
         separator: '\n\n'
         stripBanners : true
       en:
-        src: ["src/libs/microevent.js", "src/signature-document.js", "src/signature-document/*.js"]
+        src: ["src/libs/microevent.js", "src/libs/fabric.js", "src/extensions/*.js", "src/signature-document.js", "src/signature-document/*.js"]
         dest: "build/signature-document.js"
     jshint:
       all: ['src/signature-document.js', 'src/signature-document/*.js']
