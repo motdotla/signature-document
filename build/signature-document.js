@@ -539,7 +539,7 @@ r.hostname+":"+r.port):fabric.log(e.message)})}function request_fs(e,t){var n=re
       self._drawPagesBackgrounds();
       self._drawPagesCanvases();
 
-      self.FireEvent("rendered", {elements: {pages: self.pages}, style_width: self.style_width, style_height: self.style_height});
+      self.FireEvent("rendered", {multiplier: self.multiplier, fabrics: self.fabrcis});
       return true;
     });
   };
