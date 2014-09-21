@@ -1,4 +1,4 @@
-/*! signature-document.js - 0.0.1 - 2014-09-19 - scottmotte */
+/*! signature-document.js - 0.0.1 - 2014-09-21 - scottmotte */
 var MicroEvent  = function(){};
 MicroEvent.prototype  = {
   bind  : function(event, fct){

@@ -82,7 +82,7 @@ It will render out to look like the following image.
 
 A signature-document should be built in the following format. This is a working blueprint and subject to change.
 
-The format borrows from [json:api](http://jsonapi.org/). It should have a documents array, but with only one document in the array. Nested inside shall be a pages array. Each page should have a sort as an integer, and a url to the PNG or JPG image of the page. The status should say 'processed'. 
+The format borrows from [json:api](http://jsonapi.org/). It should have a documents array, but with only one document in the array. Nested inside shall be a pages array. Each page should have a number as an integer, and a url to the PNG or JPG image of the page. The status should say 'processed'. 
 
 ```json
 {
@@ -90,55 +90,55 @@ The format borrows from [json:api](http://jsonapi.org/). It should have a docume
     {
       "pages": [
         {
-          "sort": 1,
+          "number": 1,
           "url": "https://carveproduction.s3.amazonaws.com/48bb42cd-413b-4859-7173-a2e90b41f9fb/1.png"
         },
         {
-          "sort": 2,
+          "number": 2,
           "url": "https://carveproduction.s3.amazonaws.com/48bb42cd-413b-4859-7173-a2e90b41f9fb/2.png"
         },
         {
-          "sort": 3,
+          "number": 3,
           "url": "https://carveproduction.s3.amazonaws.com/48bb42cd-413b-4859-7173-a2e90b41f9fb/3.png"
         },
         {
-          "sort": 4,
+          "number": 4,
           "url": "https://carveproduction.s3.amazonaws.com/48bb42cd-413b-4859-7173-a2e90b41f9fb/4.png"
         },
         {
-          "sort": 5,
+          "number": 5,
           "url": "https://carveproduction.s3.amazonaws.com/48bb42cd-413b-4859-7173-a2e90b41f9fb/5.png"
         },
         {
-          "sort": 6,
+          "number": 6,
           "url": "https://carveproduction.s3.amazonaws.com/48bb42cd-413b-4859-7173-a2e90b41f9fb/6.png"
         },
         {
-          "sort": 7,
+          "number": 7,
           "url": "https://carveproduction.s3.amazonaws.com/48bb42cd-413b-4859-7173-a2e90b41f9fb/7.png"
         },
         {
-          "sort": 8,
+          "number": 8,
           "url": "https://carveproduction.s3.amazonaws.com/48bb42cd-413b-4859-7173-a2e90b41f9fb/8.png"
         },
         {
-          "sort": 9,
+          "number": 9,
           "url": "https://carveproduction.s3.amazonaws.com/48bb42cd-413b-4859-7173-a2e90b41f9fb/9.png"
         },
         {
-          "sort": 10,
+          "number": 10,
           "url": "https://carveproduction.s3.amazonaws.com/48bb42cd-413b-4859-7173-a2e90b41f9fb/10.png"
         },
         {
-          "sort": 11,
+          "number": 11,
           "url": "https://carveproduction.s3.amazonaws.com/48bb42cd-413b-4859-7173-a2e90b41f9fb/11.png"
         },
         {
-          "sort": 12,
+          "number": 12,
           "url": "https://carveproduction.s3.amazonaws.com/48bb42cd-413b-4859-7173-a2e90b41f9fb/12.png"
         },
         {
-          "sort": 13,
+          "number": 13,
           "url": "https://carveproduction.s3.amazonaws.com/48bb42cd-413b-4859-7173-a2e90b41f9fb/13.png"
         }
       ],
