@@ -46,7 +46,7 @@
       self._drawPagesBackgrounds();
       self._drawPagesCanvases();
 
-      self.FireEvent("rendered", {multiplier: self.multiplier, fabrics: self.fabrcis});
+      self.FireEvent("rendered", {multiplier: self.multiplier, fabrics: self.fabrics});
       return true;
     });
   };
