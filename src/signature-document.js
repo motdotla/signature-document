@@ -17,6 +17,8 @@
     this.multiplier                 = this.calculateMultiplier();
     this.style_height               = this.calculateStyleHeight(); 
 
+    this.jafja = undefined;
+
     return this;
   };
 
@@ -46,7 +48,7 @@
       self._drawPagesBackgrounds();
       self._drawPagesCanvases();
 
-      self.FireEvent("rendered", {multiplier: self.multiplier, fabrics: self.fabrics});
+      self.jafja.trigger("rendered", {multiplier: self.multiplier, fabrics: self.fabrics});
       return true;
     });
   };
@@ -159,13 +161,6 @@
 
   SignatureDocument.prototype.InsertAfter = function(reference_node, new_node) {
     return reference_node.parentNode.insertBefore(new_node, reference_node.nextSibling);
-  };
-
-  SignatureDocument.prototype.FireEvent = function(event_name, event_data) {
-    var self = this;
-    setTimeout(function(){
-      self.trigger(event_name, event_data);
-    }, 50);
   };
 
   SignatureDocument.prototype.Get = function(url, callback){

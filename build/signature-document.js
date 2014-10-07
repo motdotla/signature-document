@@ -1,4 +1,4 @@
-/*! signature-document.js - 0.0.1 - 2014-09-21 - scottmotte */
+/*! signature-document.js - 0.0.1 - 2014-10-07 - scottmotte */
 var MicroEvent  = function(){};
 MicroEvent.prototype  = {
   bind  : function(event, fct){
@@ -510,6 +510,8 @@ r.hostname+":"+r.port):fabric.log(e.message)})}function request_fs(e,t){var n=re
     this.multiplier                 = this.calculateMultiplier();
     this.style_height               = this.calculateStyleHeight(); 
 
+    this.jafja = undefined;
+
     return this;
   };
 
@@ -539,7 +541,7 @@ r.hostname+":"+r.port):fabric.log(e.message)})}function request_fs(e,t){var n=re
       self._drawPagesBackgrounds();
       self._drawPagesCanvases();
 
-      self.FireEvent("rendered", {multiplier: self.multiplier, fabrics: self.fabrics});
+      self.jafja.trigger("rendered", {multiplier: self.multiplier, fabrics: self.fabrics});
       return true;
     });
   };
@@ -652,13 +654,6 @@ r.hostname+":"+r.port):fabric.log(e.message)})}function request_fs(e,t){var n=re
 
   SignatureDocument.prototype.InsertAfter = function(reference_node, new_node) {
     return reference_node.parentNode.insertBefore(new_node, reference_node.nextSibling);
-  };
-
-  SignatureDocument.prototype.FireEvent = function(event_name, event_data) {
-    var self = this;
-    setTimeout(function(){
-      self.trigger(event_name, event_data);
-    }, 50);
   };
 
   SignatureDocument.prototype.Get = function(url, callback){

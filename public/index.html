@@ -8,9 +8,11 @@
 </head>
 <body>
   <script src='/build/signature-document.js' data-signature-document-url="http://localhost:3000/examples/1.json"></script>
+  <script src="/jafja.js"></script>
   <script>
+    signature_document.jafja = jafja;
     signature_document.init();
-    signature_document.bind('rendered', function(value) {
+    signature_document.jafja.bind('rendered', function(value) {
       console.log('rendered', value);
     });
   </script>

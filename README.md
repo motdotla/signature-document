@@ -8,7 +8,9 @@ It renders out the contents of the signature-document JSON to a formatted and re
 
 ```html
 <script src='/path/to/signature-document.js' data-signature-document-url="http://example.com/path/to/signature/document.json"></script>
+<script src="/path/to/jafja.js"></script>
 <script>
+  signature_document.jafja = jafja;
   signature_document.init();
 </script>
 ```
@@ -20,7 +22,9 @@ Place the script tag in the body of an html page. Set data-signature-document-ur
 
 ```html
 <script src='/path/to/signature-document.js' data-signature-document-url="http://example.com/path/to/signature/document.json"></script>
+<script src="/path/to/jafja.js"></script>
 <script>
+  signature_document.jafja = jafja;
   signature_document.init();
 </script>
 ```
@@ -32,8 +36,9 @@ You can bind to the following events.
 #### rendered
 
 ```javascript
+signature_document.jafja = jafja;
 signature_document.init();
-signature_document.bind('rendered', function(values) {
+signature_document.jafja.bind('rendered', function(values) {
   console.log('rendered', values);
 });
 ```
@@ -62,9 +67,11 @@ Copy & paste the following to a blank html page.
 </head>
 <body>
   <script src='https://rawgit.com/motdotla/signature-document/master/build/signature-document.min.js' data-signature-document-url="http://signature-api.herokuapp.com/api/v0/documents/8abddacd-2bb0-498c-b4f6-e3259d7edb35.json"></script>
+  <script src='https://rawgit.com/motdotla/jafja/master/build/jafja.min.js'></script>
   <script>
+    signature_document.jafja = jafja;
     signature_document.init();
-    signature_document.bind('rendered', function(value) {
+    signature_document.jafja.bind('rendered', function(value) {
       console.log('done rendering');
     });
   </script>
