@@ -47,8 +47,6 @@ This exposes a series of events you can bind to.
 
 ### Events
 
-You can bind to the following events.
-
 #### signature_document.rendered
 
 ```javascript
