@@ -541,7 +541,7 @@ r.hostname+":"+r.port):fabric.log(e.message)})}function request_fs(e,t){var n=re
       self._drawPagesBackgrounds();
       self._drawPagesCanvases();
 
-      self.jafja.trigger("rendered", {multiplier: self.multiplier, fabrics: self.fabrics});
+      self.jafja.trigger("signature_document.rendered", {multiplier: self.multiplier, fabrics: self.fabrics});
       return true;
     });
   };
@@ -640,7 +640,7 @@ r.hostname+":"+r.port):fabric.log(e.message)})}function request_fs(e,t){var n=re
       y:        fab.getPointer(event).y || this.last_click.y 
     };
 
-    this.jafja.trigger("fabric.clicked", this.last_click);
+    this.jafja.trigger("signature_document.fabric.clicked", this.last_click);
   };
 
   SignatureDocument.prototype._fabricEvents = function(fab) {
