@@ -29,6 +29,22 @@ Place the script tag in the body of an html page. Set data-signature-document-ur
 </script>
 ```
 
+### init()
+
+```javascript
+signature_document.init();
+```
+
+### jafja
+
+```javascript
+signature_chrome.jafja = jafja
+```
+
+Set jafja to a [jafja](https://github.com/motdotla/jafja) object.                                                                              
+
+This exposes a series of events you can bind to. 
+
 ### Events
 
 You can bind to the following events.
@@ -36,14 +52,12 @@ You can bind to the following events.
 #### signature_document.rendered
 
 ```javascript
-signature_document.jafja = jafja;
-signature_document.init();
 jafja.bind('signature_document.rendered', function(values) {
   console.log('rendered', values);
 });
 ```
 
-This will expose a spattering of values.
+The result is an object of values.
 
 * `multipler` - The width and height calculation multiplier.
 * `fabrics` - List of fabrics' dom rendered for the document.
@@ -58,14 +72,12 @@ This will expose a spattering of values.
 #### signature_document.fabric.clicked
 
 ```javascript
-signature_document.jafja = jafja;
-signature_document.init();
 jafja.bind('signature_document.fabric.clicked', function(values) {
   console.log('fabric.clicked', values);
 });
 ```
 
-This will expose the following values.
+The result is an object of values.
 
 * `fabric` - Instance of fabric.Canvas.
 * `x` - The x position of the last click.
@@ -95,8 +107,8 @@ Copy & paste the following to a blank html page.
   <script>
     signature_document.jafja = jafja;
     signature_document.init();
-    jafja.bind('signature_document.rendered', function(value) {
-      console.log('done rendering');
+    jafja.bind('signature_document.rendered', function(result) {
+      console.log('done rendering', result);
     });
   </script>
 </body>
