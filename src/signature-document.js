@@ -160,7 +160,12 @@
     });
 
     fab.on('mouse:up', function(options) {
-      _this._fireLastClick(fab, page_number, options.e);
+      if (options.target || !fabric.tapping) {
+        // let object:modified handle things.
+        // if touch scrolling instead of tapping arrive here as well.
+      } else {
+        _this._fireLastClick(fab, page_number, options.e);
+      }
     });
   };
 
