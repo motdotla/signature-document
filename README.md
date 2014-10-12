@@ -33,12 +33,12 @@ Place the script tag in the body of an html page. Set data-signature-document-ur
 
 You can bind to the following events.
 
-#### rendered
+#### signature_document.rendered
 
 ```javascript
 signature_document.jafja = jafja;
 signature_document.init();
-jafja.bind('rendered', function(values) {
+jafja.bind('signature_document.rendered', function(values) {
   console.log('rendered', values);
 });
 ```
@@ -55,12 +55,12 @@ This will expose a spattering of values.
 }
 ```
 
-#### fabric.clicked
+#### signature_document.fabric.clicked
 
 ```javascript
 signature_document.jafja = jafja;
 signature_document.init();
-jafja.bind('fabric.clicked', function(values) {
+jafja.bind('signature_document.fabric.clicked', function(values) {
   console.log('fabric.clicked', values);
 });
 ```
@@ -95,7 +95,7 @@ Copy & paste the following to a blank html page.
   <script>
     signature_document.jafja = jafja;
     signature_document.init();
-    jafja.bind('rendered', function(value) {
+    jafja.bind('signature_document.rendered', function(value) {
       console.log('done rendering');
     });
   </script>
