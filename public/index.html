@@ -12,10 +12,12 @@
   <script>
     signature_document.jafja = jafja;
     signature_document.init();
-    signature_document.jafja.bind('rendered', function(value) {
+
+    jafja.bind('rendered', function(value) {
       console.log('rendered', value);
     });
-    signature_document.jafja.bind('fabric.clicked', function(value) {
+
+    jafja.bind('fabric.clicked', function(value) {
       console.log('fabric.clicked', value);
     });
   </script>

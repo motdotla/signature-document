@@ -635,9 +635,9 @@ r.hostname+":"+r.port):fabric.log(e.message)})}function request_fs(e,t){var n=re
 
   SignatureDocument.prototype._fireLastClick = function(fab, event) {
     this.last_click = {
-      fab:  fab,
-      x:    fab.getPointer(event).x || this.last_click.x,
-      y:    fab.getPointer(event).y || this.last_click.y 
+      fabric:   fab,
+      x:        fab.getPointer(event).x || this.last_click.x,
+      y:        fab.getPointer(event).y || this.last_click.y 
     };
 
     this.jafja.trigger("fabric.clicked", this.last_click);

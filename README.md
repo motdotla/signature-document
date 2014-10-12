@@ -38,7 +38,7 @@ You can bind to the following events.
 ```javascript
 signature_document.jafja = jafja;
 signature_document.init();
-signature_document.jafja.bind('rendered', function(values) {
+jafja.bind('rendered', function(values) {
   console.log('rendered', values);
 });
 ```
@@ -60,7 +60,7 @@ This will expose a spattering of values.
 ```javascript
 signature_document.jafja = jafja;
 signature_document.init();
-signature_document.jafja.bind('fabric.clicked', function(values) {
+jafja.bind('fabric.clicked', function(values) {
   console.log('fabric.clicked', values);
 });
 ```
@@ -95,7 +95,7 @@ Copy & paste the following to a blank html page.
   <script>
     signature_document.jafja = jafja;
     signature_document.init();
-    signature_document.jafja.bind('rendered', function(value) {
+    jafja.bind('rendered', function(value) {
       console.log('done rendering');
     });
   </script>
