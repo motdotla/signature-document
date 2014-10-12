@@ -67,13 +67,13 @@ signature_document.jafja.bind('fabric.clicked', function(values) {
 
 This will expose the following values.
 
-* `fab` - The fabric dom.
+* `fabric` - Instance of fabric.Canvas.
 * `x` - The x position of the last click.
 * `y` - The y position of the last click.
 
 ```javascript
 {
-  fab: fab,
+  fabric: fabric.Canvas,
   x: 20,
   y: 20
 }
