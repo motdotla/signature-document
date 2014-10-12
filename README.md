@@ -55,6 +55,30 @@ This will expose a spattering of values.
 }
 ```
 
+#### fabric.clicked
+
+```javascript
+signature_document.jafja = jafja;
+signature_document.init();
+signature_document.jafja.bind('fabric.clicked', function(values) {
+  console.log('fabric.clicked', values);
+});
+```
+
+This will expose the following values.
+
+* `fab` - The fabric dom.
+* `x` - The x position of the last click.
+* `y` - The y position of the last click.
+
+```javascript
+{
+  fab: fab,
+  x: 20,
+  y: 20
+}
+```
+
 ### Example
 
 Copy & paste the following to a blank html page.

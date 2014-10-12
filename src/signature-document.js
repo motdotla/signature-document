@@ -131,13 +131,37 @@
     var fab                         = new fabric.Canvas("signature-document-canvas-"+page_number);
     fab.selection = false; // disable global canvas selection
     //fab.signature_page_id           = this.json.documents[0].pages[page_number-1];
-    //this.fabricEvents(fab);
+    this._fabricEvents(fab);
 
     fab.setWidth(this.style_width);
     fab.setHeight(this.style_height);
     fab.calcOffset();
 
     return this.fabrics.push(fab);
+  };
+
+  SignatureDocument.prototype._fireLastClick = function(fab, event) {
+    this.last_click = {
+      fab:  fab,
+      x:    fab.getPointer(event).x || this.last_click.x,
+      y:    fab.getPointer(event).y || this.last_click.y 
+    };
+
+    this.jafja.trigger("fabric.clicked", this.last_click);
+  };
+
+  SignatureDocument.prototype._fabricEvents = function(fab) {
+    var _this = this;               
+    fab.on('mouse:down', function(options) {
+      // only use mouse:down for touch events. Won't capture x,y on mouse:up for touch events
+      if (options.e.targetTouches && options.e.targetTouches.length > 0) {
+        _this._fireLastClick(fab, options.e);
+      }
+    });
+
+    fab.on('mouse:up', function(options) {
+      _this._fireLastClick(fab, options.e);
+    });
   };
 
   SignatureDocument.prototype.Uuid = function() {
