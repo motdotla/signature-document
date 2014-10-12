@@ -131,7 +131,7 @@
     var fab                         = new fabric.Canvas("signature-document-canvas-"+page_number);
     fab.selection = false; // disable global canvas selection
     //fab.signature_page_id           = this.json.documents[0].pages[page_number-1];
-    this._fabricEvents(fab);
+    this._fabricEvents(fab, page_number);
 
     fab.setWidth(this.style_width);
     fab.setHeight(this.style_height);
@@ -140,27 +140,27 @@
     return this.fabrics.push(fab);
   };
 
-  SignatureDocument.prototype._fireLastClick = function(fab, event) {
+  SignatureDocument.prototype._fireLastClick = function(fab, page_number, event) {
     this.last_click = {
-      fabric:   fab,
-      x:        fab.getPointer(event).x || this.last_click.x,
-      y:        fab.getPointer(event).y || this.last_click.y 
+      page_number:  page_number,
+      x:            fab.getPointer(event).x || this.last_click.x,
+      y:            fab.getPointer(event).y || this.last_click.y 
     };
 
     this.jafja.trigger("signature_document.fabric.clicked", this.last_click);
   };
 
-  SignatureDocument.prototype._fabricEvents = function(fab) {
+  SignatureDocument.prototype._fabricEvents = function(fab, page_number) {
     var _this = this;               
     fab.on('mouse:down', function(options) {
       // only use mouse:down for touch events. Won't capture x,y on mouse:up for touch events
       if (options.e.targetTouches && options.e.targetTouches.length > 0) {
-        _this._fireLastClick(fab, options.e);
+        _this._fireLastClick(fab, page_number, options.e);
       }
     });
 
     fab.on('mouse:up', function(options) {
-      _this._fireLastClick(fab, options.e);
+      _this._fireLastClick(fab, page_number, options.e);
     });
   };
 

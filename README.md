@@ -51,7 +51,7 @@ This exposes a series of events you can bind to.
 
 ```javascript
 jafja.bind('signature_document.rendered', function(values) {
-  console.log('rendered', values);
+  console.log('signature_document.rendered', values);
 });
 ```
 
@@ -71,19 +71,19 @@ The result is an object of values.
 
 ```javascript
 jafja.bind('signature_document.fabric.clicked', function(values) {
-  console.log('fabric.clicked', values);
+  console.log('signature_document.fabric.clicked', values);
 });
 ```
 
 The result is an object of values.
 
-* `fabric` - Instance of fabric.Canvas.
+* `page_number` - The number of the page (fabric) clicked.
 * `x` - The x position of the last click.
 * `y` - The y position of the last click.
 
 ```javascript
 {
-  fabric: fabric.Canvas,
+  page_number: 1,
   x: 20,
   y: 20
 }
