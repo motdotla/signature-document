@@ -89,6 +89,20 @@ The result is an object of values.
 }
 ```
 
+#### signature_document.object.selected
+
+```javascript
+jafja.bind('signature_document.object.selected', function(values) {
+  console.log('signature_document.object.selected', values);
+});
+```
+
+The result is an empty object.
+
+```javascript
+{}
+```
+
 ### Example
 
 Copy & paste the following to a blank html page.

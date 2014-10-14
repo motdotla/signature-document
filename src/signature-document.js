@@ -167,6 +167,16 @@
         _this._fireLastClick(fab, page_number, options.e);
       }
     });
+
+    fab.on('object:selected', function(options) {
+      _this.jafja.trigger("signature_document.object.selected", {});
+
+      for (var i=0; i < _this.fabrics.length; i++) {
+        if (_this.fabrics[i] != fab) {
+          _this.fabrics[i].deactivateAll().renderAll();
+        }
+      }
+    });
   };
 
   SignatureDocument.prototype.Uuid = function() {

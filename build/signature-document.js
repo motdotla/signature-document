@@ -1,4 +1,4 @@
-/*! signature-document.js - 0.0.1 - 2014-10-12 - scottmotte */
+/*! signature-document.js - 0.0.1 - 2014-10-14 - scottmotte */
 var MicroEvent  = function(){};
 MicroEvent.prototype  = {
   bind  : function(event, fct){
@@ -658,6 +658,16 @@ r.hostname+":"+r.port):fabric.log(e.message)})}function request_fs(e,t){var n=re
         // if touch scrolling instead of tapping arrive here as well.
       } else {
         _this._fireLastClick(fab, page_number, options.e);
+      }
+    });
+
+    fab.on('object:selected', function(options) {
+      _this.jafja.trigger("signature_document.object.selected", {});
+
+      for (var i=0; i < _this.fabrics.length; i++) {
+        if (_this.fabrics[i] != fab) {
+          _this.fabrics[i].deactivateAll().renderAll();
+        }
       }
     });
   };
