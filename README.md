@@ -42,7 +42,6 @@ signature_chrome.jafja = jafja
 ```
 
 Set jafja to a [jafja](https://github.com/motdotla/jafja) object.                                                                              
-
 This exposes a series of events you can bind to. 
 
 ### Events
