@@ -115,12 +115,14 @@ The result is an object of values.
 * `id` - The id of the object (element) modified.
 * `x` - The x position of the last click.
 * `y` - The y position of the last click.
+* `type` - Either 'signature_element' or 'text_element'.
 
 ```javascript
 {
   id: "some-id",
   x: 20,
-  y: 20
+  y: 20,
+  type: 'signature_element'
 }
 ```
 

@@ -672,25 +672,26 @@ r.hostname+":"+r.port):fabric.log(e.message)})}function request_fs(e,t){var n=re
     });
 
     fab.on('object:modified', function(options) {
-
+      var id;
+      var type;
       var payload = {      
-        x: parseFloat(options.target.left) * (1.0/self.multiplier),
-        y: parseFloat(options.target.top) * (1.0/self.multiplier) 
+        x: parseFloat(options.target.left) * (1.0/_this.multiplier),
+        y: parseFloat(options.target.top) * (1.0/_this.multiplier) 
       };
 
       options.target.set({ honest_left: payload.x, honest_top: payload.y });
 
-      var id;
-      if (options.signature_element_id) {
-        id = options.signature_element_id;
-      } else {
-        id = options.text_element_id;
+      if (options.target.signature_element_id) {
+        type = "signature_element";
+        id = options.target.signature_element_id;
+      } else if (options.target.text_element_id) {
+        type = "text_element";
+        id = options.target.text_element_id;
       }
-      _this.jafja.trigger("signature_document.object.modified", {x: payload.x, y: payload.y, id: id});
 
-      //self.Post(self.endpoint+"/api/v0/"+element_api_path+"/"+options.target.signature_element_id+"/update.json", payload, function(resp) {
-      //  if (!resp.success) { console.error(resp.error.message); }
-      //});
+      if (type) {
+        _this.jafja.trigger("signature_document.object.modified", {x: payload.x, y: payload.y, id: id, type: type});
+      }
     });
   };
 
