@@ -187,9 +187,13 @@
 
       options.target.set({ honest_left: payload.x, honest_top: payload.y });
 
-      console.log(options.target);
-
-      _this.jafja.trigger("signature_document.object.modified", {x: payload.x, y: payload.y});
+      var id;
+      if (options.signature_element_id) {
+        id = options.signature_element_id;
+      } else {
+        id = options.text_element_id;
+      }
+      _this.jafja.trigger("signature_document.object.modified", {x: payload.x, y: payload.y, id: id});
 
       //self.Post(self.endpoint+"/api/v0/"+element_api_path+"/"+options.target.signature_element_id+"/update.json", payload, function(resp) {
       //  if (!resp.success) { console.error(resp.error.message); }
