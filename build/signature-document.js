@@ -1,4 +1,4 @@
-/*! signature-document.js - 0.0.1 - 2014-10-14 - scottmotte */
+/*! signature-document.js - 0.0.1 - 2014-10-17 - scottmotte */
 var MicroEvent  = function(){};
 MicroEvent.prototype  = {
   bind  : function(event, fct){
@@ -669,6 +669,24 @@ r.hostname+":"+r.port):fabric.log(e.message)})}function request_fs(e,t){var n=re
           _this.fabrics[i].deactivateAll().renderAll();
         }
       }
+    });
+
+    fab.on('object:modified', function(options) {
+
+      var payload = {      
+        x: parseFloat(options.target.left) * (1.0/self.multiplier),
+        y: parseFloat(options.target.top) * (1.0/self.multiplier) 
+      };
+
+      options.target.set({ honest_left: payload.x, honest_top: payload.y });
+
+      console.log(options.target);
+
+      _this.jafja.trigger("signature_document.object.modified", {x: payload.x, y: payload.y});
+
+      //self.Post(self.endpoint+"/api/v0/"+element_api_path+"/"+options.target.signature_element_id+"/update.json", payload, function(resp) {
+      //  if (!resp.success) { console.error(resp.error.message); }
+      //});
     });
   };
 

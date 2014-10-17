@@ -102,6 +102,28 @@ The result is an empty object.
 {}
 ```
 
+#### signature_document.fabric.modified
+
+```javascript
+jafja.bind('signature_document.fabric.modified', function(values) {
+  console.log('signature_document.fabric.modified', values);
+});
+```
+
+The result is an object of values.
+
+* `id` - The id of the object (element) modified.
+* `x` - The x position of the last click.
+* `y` - The y position of the last click.
+
+```javascript
+{
+  id: "some-id",
+  x: 20,
+  y: 20
+}
+```
+
 ### Example
 
 Copy & paste the following to a blank html page.
